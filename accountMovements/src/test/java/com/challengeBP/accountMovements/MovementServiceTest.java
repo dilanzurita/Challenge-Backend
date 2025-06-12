@@ -1,10 +1,11 @@
 package com.challengeBP.accountMovements;
 
-import com.challengeBP.accountMovements.model.Account;
-import com.challengeBP.accountMovements.model.Movement;
-import com.challengeBP.accountMovements.repository.AccountRepository;
-import com.challengeBP.accountMovements.repository.MovementRepository;
-import com.challengeBP.accountMovements.service.impl.MovementServiceImpl;
+import com.challengeBP.accountMovements.application.dto.MovementDetailDTO;
+import com.challengeBP.accountMovements.domain.model.Account;
+import com.challengeBP.accountMovements.domain.model.Movement;
+import com.challengeBP.accountMovements.domain.input.MovementRepository;
+import com.challengeBP.accountMovements.application.service.MovementServiceImpl;
+import com.challengeBP.accountMovements.domain.output.ClientAccountPort;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,7 +23,7 @@ public class MovementServiceTest {
     private MovementRepository movementRepository;
 
     @Mock
-    private AccountRepository accountRepository;
+    private ClientAccountPort accountClientPort;
 
     @InjectMocks
     private MovementServiceImpl movementService;
@@ -41,10 +42,10 @@ public class MovementServiceTest {
 
         movement.setAccount(account);
 
-        Mockito.when(accountRepository.findById(accountId)).thenReturn(Optional.of(account));
+        Mockito.when(accountClientPort.findById(accountId)).thenReturn(Mono.just(account));
 
         // When
-        Mono<Movement> result = movementService.create(movement);
+        Mono<MovementDetailDTO> result = movementService.create(movement);
 
         // Then
         StepVerifier.create(result)
@@ -52,4 +53,28 @@ public class MovementServiceTest {
                         throwable.getMessage().equals("Saldo no disponible"))
                 .verify();
     }
+
+//    @Test
+//    void shouldProcessCreditMovementSuccessfully() {
+//        // Given
+//        Long accountId = 1L;
+//        Movement movement = new Movement();
+//        movement.setType("credito");
+//        movement.setValue(100.0);
+//
+//        Account account = new Account();
+//        account.setId(accountId);
+//        account.setInitialBalance(50.0);
+//
+//        movement.setAccount(account);
+//
+//
+//        Mockito.when(accountClientPort.findById(accountId)).thenReturn(Mono.just(account));
+//        Mockito.when(accountClientPort.update(account)).thenReturn(Mono.just(account));
+//        Mono<Movement> result = movementService.create(movement);
+//
+//        StepVerifier.create(result)
+//                .expectNextMatches(savedMovement -> savedMovement.getBalance() == 150.0)
+//                .verifyComplete();
+//    }
 }
