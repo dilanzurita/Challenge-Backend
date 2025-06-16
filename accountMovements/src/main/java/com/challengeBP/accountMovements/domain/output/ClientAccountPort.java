@@ -11,4 +11,6 @@ import java.util.List;
 public interface ClientAccountPort {
     Mono<Account> findById(Long id);
     Mono<Account> update(Account account);
+    Mono<Account> findByNumber(String number);
+
 }

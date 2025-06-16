@@ -32,8 +32,6 @@ public class ReportController {
     ) {
         return clientAccountPort.findById(clientId)  // Simula la llamada al micro de ClientAccount
                 .flatMap(account -> {
-                    // Aquí es donde aplicas la lógica para obtener el estado de la cuenta
-                    // Puedes usar `reportService.getAccountStatement` o procesar los datos directamente.
                     return reportService.getAccountStatement(clientId, startDate, endDate)
                             .map(ResponseEntity::ok)
                             .defaultIfEmpty(ResponseEntity.noContent().build());
@@ -46,7 +44,7 @@ public class ReportController {
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return clientAccountPort.findById(clientId)  // Llamada al microservicio ClientAccount para obtener la cuenta
+        return clientAccountPort.findById(clientId)
                 .flatMap(account -> {
                     return reportService.getAccountStatement(clientId, startDate, endDate)
                             .map(accounts -> {
@@ -73,8 +71,8 @@ public class ReportController {
                                             Row row = sheet.createRow(rowNum++);
                                             row.createCell(0).setCellValue(movement.getDate().toString());
                                             row.createCell(1).setCellValue(movement.getType());
-                                            row.createCell(2).setCellValue(movement.getValue());
-                                            row.createCell(3).setCellValue(movement.getBalance());
+                                            row.createCell(2).setCellValue(movement.getValue().doubleValue());
+                                            row.createCell(3).setCellValue(movement.getBalance().doubleValue());
                                         }
 
                                         rowNum++; // Espacio entre cuentas

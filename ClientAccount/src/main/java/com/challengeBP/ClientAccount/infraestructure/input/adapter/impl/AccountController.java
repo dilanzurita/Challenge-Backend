@@ -37,6 +37,13 @@ public class AccountController {
                 .map(mapper::toDto);
     }
 
+    @GetMapping("/number/{number}")
+    public Mono<AccountDTO> getAccountByNumber(@PathVariable String number){
+        log.info("GET -> account by number: {}",number);
+        return accountServicePort.getByNumber(number)
+                .map(mapper::toDto);
+    }
+
     @PostMapping
     public Mono<AccountDTO> createAccount(@RequestBody AccountRequestDto requestDto) {
         log.info("POST -> createAccount {}",requestDto);

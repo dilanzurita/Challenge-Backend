@@ -9,6 +9,4 @@ import java.util.List;
 
 public interface ReportService {
     Mono<List<AccountDTO>> getAccountStatement(Long clientId, LocalDate start, LocalDate end);
-
-//    @Query("SELECT * FROM ")
 }

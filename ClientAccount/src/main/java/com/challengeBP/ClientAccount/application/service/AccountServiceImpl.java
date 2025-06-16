@@ -91,4 +91,9 @@ public class AccountServiceImpl implements AccountServicePort {
     public Mono<Void> delete(Long id) {
         return Mono.fromRunnable(() -> accountPort.delete(id));
     }
+
+    @Override
+    public Mono<Account> getByNumber(String number) {
+        return Mono.justOrEmpty(accountPort.findByNumber(number));
+    }
 }

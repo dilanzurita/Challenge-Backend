@@ -6,7 +6,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface MovementService {
-    Flux<MovementDetailDTO> getAll();
-    Mono<MovementDetailDTO> getById(Long id);
-    Mono<MovementDetailDTO> create(Movement movement);
+    Flux<Movement> getAll();
+    Mono<Movement> getById(Long id);
+    Mono<Movement> create(Movement movement);
 }

@@ -13,4 +13,5 @@ public interface AccountServicePort {
     Mono<Account> create(Account account);
     Optional<Account> update(Long id, Account account);
     Mono<Void> delete(Long id);
+    Mono<Account> getByNumber(String number);
 }

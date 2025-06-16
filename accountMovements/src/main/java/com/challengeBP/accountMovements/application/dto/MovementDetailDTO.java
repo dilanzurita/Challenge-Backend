@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -12,6 +13,6 @@ import java.time.LocalDateTime;
 public class MovementDetailDTO {
     private LocalDateTime date;
     private String type;
-    private Double value;
-    private Double balance;
+    private BigDecimal value;
+    private BigDecimal balance;
 }

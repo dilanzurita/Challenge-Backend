@@ -43,6 +43,17 @@ public class ClientAccountRestAdapter implements ClientAccountPort {
                 .map(mapper::toDomain);
     }
 
+    @Override
+    public Mono<Account> findByNumber(String number) {
+        return clientAccountWebClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/v1/accounts/number/{number}")
+                        .build(number))
+                .retrieve()
+                .bodyToMono(AccountDTO.class)
+                .map(mapper::toDomain);
+    }
+
 //    @Override
 //    public Flux<Movement> findByAccountIdAndDateBetween(Long accountId, LocalDateTime start, LocalDateTime end) {
 //        return clientAccountWebClient.get()
