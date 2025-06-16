@@ -3,7 +3,6 @@ package com.challengeBP.accountMovements;
 import com.challengeBP.accountMovements.application.dto.MovementDetailDTO;
 import com.challengeBP.accountMovements.domain.model.Account;
 import com.challengeBP.accountMovements.domain.model.Movement;
-import com.challengeBP.accountMovements.domain.input.MovementRepository;
 import com.challengeBP.accountMovements.application.service.MovementServiceImpl;
 import com.challengeBP.accountMovements.domain.output.ClientAccountPort;
 import org.junit.jupiter.api.Test;
@@ -15,12 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.util.Optional;
-
 @ExtendWith(MockitoExtension.class)
 public class MovementServiceTest {
-    @Mock
-    private MovementRepository movementRepository;
 
     @Mock
     private ClientAccountPort accountClientPort;

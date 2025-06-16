@@ -2,7 +2,7 @@ package com.challengeBP.accountMovements.application.service;
 
 import com.challengeBP.accountMovements.application.dto.MovementDetailDTO;
 import com.challengeBP.accountMovements.domain.model.Movement;
-import com.challengeBP.accountMovements.domain.input.MovementRepository;
+import com.challengeBP.accountMovements.infraestructure.output.adapter.repositories.MovementRepository;
 import com.challengeBP.accountMovements.domain.input.MovementService;
 import com.challengeBP.accountMovements.domain.output.ClientAccountPort;
 import com.challengeBP.accountMovements.infraestructure.output.adapter.mapper.MovementMapper;

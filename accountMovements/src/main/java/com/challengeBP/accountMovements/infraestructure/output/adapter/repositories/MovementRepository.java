@@ -1,4 +1,4 @@
-package com.challengeBP.accountMovements.domain.input;
+package com.challengeBP.accountMovements.infraestructure.output.adapter.repositories;
 
 import com.challengeBP.accountMovements.domain.model.Movement;
 import org.springframework.data.jpa.repository.JpaRepository;

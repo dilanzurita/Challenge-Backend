@@ -1,4 +1,4 @@
-package com.challengeBP.ClientAccount.domain.input;
+package com.challengeBP.ClientAccount.domain.output;
 
 import com.challengeBP.ClientAccount.application.dto.AccountDTO;
 import com.challengeBP.ClientAccount.domain.model.Account;
@@ -7,10 +7,10 @@ import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
-public interface AccountServicePort {
-    Flux<Account> getAll();
-    Optional<Account> getById(Long id);
-    Mono<Account> create(Account account);
-    Optional<Account> update(Long id, Account account);
+public interface AccountPort {
+    Flux<Account> findAll();
+    Optional<Account> findById(Long id);
+    Mono<Account> save(Account account);
     Mono<Void> delete(Long id);
+    Optional<Account> findByNumber(String number);
 }
