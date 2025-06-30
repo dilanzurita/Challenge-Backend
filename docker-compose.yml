@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: challenge123
+      POSTGRES_DB: ChallengeBP
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  client-account:
+    build:
+      context: ./clientAccount
+    container_name: client-account
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ChallengeBP
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: challenge123
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  account-movements:
+    build:
+      context: ./accountMovements
+    container_name: account-movements
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ChallengeBP
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: challenge123
+      SERVICES_CLIENT_ACCOUNT_BASE_URL: http://client-account:8080
+    depends_on:
+      - postgres
+      - client-account
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
