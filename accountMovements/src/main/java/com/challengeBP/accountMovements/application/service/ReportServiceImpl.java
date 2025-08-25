@@ -1,6 +1,7 @@
 package com.challengeBP.accountMovements.application.service;
 
 import com.challengeBP.accountMovements.domain.input.ReportService;
+import com.challengeBP.accountMovements.domain.model.Account;
 import com.challengeBP.accountMovements.domain.model.Movement;
 import com.challengeBP.accountMovements.infraestructure.output.adapter.mapper.MovementMapper;
 import com.challengeBP.accountMovements.infraestructure.output.adapter.repositories.MovementRepository;
@@ -27,7 +28,7 @@ public class ReportServiceImpl implements ReportService {
     private final MovementMapper movementMapper;
 
     @Override
-    public Mono<List<AccountDTO>> getAccountStatement(Long clientId, LocalDate start, LocalDate end) {
+    public Mono<List<Account>> getAccountStatement(Long clientId, LocalDate start, LocalDate end) {
         return accountClientPort.findById(clientId)
                 .flatMapMany(account -> {
                     List<MovementEntity> movementEntities = movementRepository.findByAccountIdAndDateBetween(
@@ -37,14 +38,13 @@ public class ReportServiceImpl implements ReportService {
                             .map(movementMapper::toDomain)
                             .toList();
 
-                    List<MovementDetailDTO> movementDTOs = filteredMovements.stream()
-                            .map(m -> new MovementDetailDTO(m.getDate(), m.getType().name(), m.getValue(), m.getBalance()))
-                            .toList();
+//                    List<MovementDetailDTO> movementDTOs = filteredMovements.stream()
+//                            .map(m -> new MovementDetailDTO(m.getDate(), m.getType().name(), m.getValue(), m.getBalance()))
+//                            .toList();
 
-                    AccountDTO dto = clientAccountMapper.toDto(account);
-                    dto.setMovements(movementDTOs);
+                    account.setMovements(filteredMovements);
 
-                    return Flux.just(dto);
+                    return Flux.just(account);
                 })
                 .collectList();
     }

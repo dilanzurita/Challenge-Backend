@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,4 +18,5 @@ public class Account {
     private BigDecimal initialBalance;
     private Boolean status;
     private Long clientId;
+    private List<Movement> movements;
 }
